@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public interface SQLVariable<T> extends SQLSupplier<T> {
     @Override
-    default void toSQL(SQLBuilder<?> builder) {
+    default void toSQL(SQLBuilder builder) {
         builder.append("?");
     }
     void writeValue(PreparedStatement statement, int index) throws SQLException;

@@ -10,7 +10,7 @@ public class ColumnSetElement implements SQLSyntaxElement {
     private final SequencedSet<Column<?>> columns;
 
     @Override
-    public void toSQL(SQLBuilder<?> builder) {
+    public void toSQL(SQLBuilder builder) {
         builder.appendSeparated(columns, (b, column) -> b.append(column.toDefinition()), ", ");
     }
 

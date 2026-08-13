@@ -15,7 +15,7 @@ public class AbstractColumn<T> extends ColumnBase<T> implements TableColumn<T> {
     }
 
     @Override
-    public void toSQL(SQLBuilder<?> builder) {
+    public void toSQL(SQLBuilder builder) {
         if (table != null) {
             builder.append(table).append(".");
         }

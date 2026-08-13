@@ -13,7 +13,7 @@ public class IndexSupplier implements SQLLongSupplier {
     }
 
     @Override
-    public void toSQL(SQLBuilder<?> builder) {
+    public void toSQL(SQLBuilder builder) {
         builder.append("ROW_NUMBER() OVER (ORDER BY ").append(column).append(desc?" DESC":"").append(")");
     }
 }

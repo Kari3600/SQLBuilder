@@ -11,67 +11,56 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.BiConsumer;
 
-public abstract class SQLBuilder<T extends SQLBuilder<T>> {
+public class SQLBuilder {
     protected final StringBuilder b = new StringBuilder();
     private final List<SQLVariable<?>> variables = new ArrayList<>();
 
-    @SuppressWarnings("unchecked")
-    public T append(String syntax) {
+    public SQLBuilder append(String syntax) {
         b.append(syntax);
-        return (T) this;
+        return this;
     }
 
-    @SuppressWarnings("unchecked")
-    public T append(SQLSyntaxElement syntax) {
+    public SQLBuilder append(SQLSyntaxElement syntax) {
         syntax.toSQL(this);
         if (syntax instanceof SQLVariable<?>) {
             variables.add((SQLVariable<?>) syntax);
         }
-        return (T) this;
+        return this;
     }
 
-    @SuppressWarnings("unchecked")
-    public T append(SQLBuilder<?> syntax) {
+    public SQLBuilder append(SQLBuilder syntax) {
         b.append(syntax.b);
         variables.addAll(syntax.variables);
-        return (T) this;
+        return this;
     }
 
-    @SuppressWarnings("unchecked")
-    public T appendSeparated(Iterable<? extends SQLSyntaxElement> elements, String separator) {
+    public SQLBuilder appendSeparated(Iterable<? extends SQLSyntaxElement> elements, String separator) {
         Iterator<? extends SQLSyntaxElement> it = elements.iterator();
-        if (!it.hasNext()) return (T) this;
+        if (!it.hasNext()) return this;
         append(it.next());
         while (it.hasNext()) {
             append(separator);
             append(it.next());
         }
-        return (T) this;
+        return this;
     }
 
-    @SuppressWarnings("unchecked")
-    public <V> T appendSeparated(Iterable<V> elements, BiConsumer<SQLBuilder<T>, V> appender, String separator) {
+    public <V> SQLBuilder appendSeparated(Iterable<V> elements, BiConsumer<SQLBuilder, V> appender, String separator) {
         Iterator<V> it = elements.iterator();
-        if (!it.hasNext()) return (T) this;
+        if (!it.hasNext()) return this;
         appender.accept(this, it.next());
         while (it.hasNext()) {
             append(separator);
             appender.accept(this, it.next());
         }
-        return (T) this;
+        return this;
     }
 
-    protected void setVariables(PreparedStatement ps) throws SQLException {
+    public void setVariables(PreparedStatement ps) throws SQLException {
         int idx = 0;
         for (SQLVariable<?> variable : variables) {
             variable.writeValue(ps, idx++);
         }
-    }
-
-    public PreparedStatement build(Connection connection) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement(b.toString());
-        setVariables(statement);
-        return statement;
     }
 
     @Override

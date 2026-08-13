@@ -1,6 +1,4 @@
-package com.kari3600.me.sqlbuilder;
-
-import com.kari3600.me.sqlbuilder.syntax.Identifier;
+package com.kari3600.me.sqlbuilder.syntax;
 
 public abstract class IdentifierBase implements Identifier {
     protected final String name;

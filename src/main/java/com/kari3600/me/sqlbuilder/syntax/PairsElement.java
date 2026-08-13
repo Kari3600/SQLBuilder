@@ -14,7 +14,7 @@ public class PairsElement extends OrderedPropertiesElement {
     }
 
     @Override
-    public void toSQL(SQLBuilder<?> builder) {
+    public void toSQL(SQLBuilder builder) {
         builder.appendSeparated(orderedProperties.entrySet(), (builder1, entry) ->
             builder1.append(entry.getKey()).append(" = ").append(entry.getValue()), ", ");
     }

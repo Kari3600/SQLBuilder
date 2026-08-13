@@ -1,17 +1,17 @@
 package com.kari3600.me;
 
-import com.kari3600.me.sqlbuilder.builders.QueryBuilder;
-import com.kari3600.me.sqlbuilder.builders.SQLBuilder;
+import com.kari3600.me.sqlbuilder.builders.StatementBuilder;
+import com.kari3600.me.sqlbuilder.builders.stage.CoreBuilder;
 import com.kari3600.me.sqlbuilder.syntax.ColumnSetElement;
 import com.kari3600.me.sqlbuilder.syntax.column.Column;
 import com.kari3600.me.sqlbuilder.syntax.column.TableColumn;
 import com.kari3600.me.sqlbuilder.syntax.supplier.IndexSupplier;
 import com.kari3600.me.sqlbuilder.syntax.table.DBTable;
+import com.kari3600.me.sqlbuilder.syntax.table.SubqueryTable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.sql.SQLException;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class AppTest {
     @ParameterizedTest
     @MethodSource("getTests")
-    public void test(SQLBuilder<?> builder, String expected) {
+    public void test(CoreBuilder builder, String expected) {
         assertEquals(expected, builder.toString());
     }
 
@@ -32,7 +32,7 @@ public class AppTest {
         TableColumn<Integer> valueColumn = Column.integerColumn("value");
         Column<Long> innerIndexColumn = new IndexSupplier(valueColumn, desc).asColumn("index");
 
-        QueryBuilder.SubqueryTable subquery = QueryBuilder.select(
+        SubqueryTable subquery = StatementBuilder.select(
                 ColumnSetElement.of(
                         keyColumn,
                         innerIndexColumn
@@ -43,7 +43,7 @@ public class AppTest {
         Column<Long> indexColumn = subquery.longColumn("index");
 
         return Map.of(
-                QueryBuilder.select(
+                StatementBuilder.select(
                         ColumnSetElement.of(
                                 table.stringColumn("username")
                         ),
@@ -53,10 +53,10 @@ public class AppTest {
                 ),
                 "SELECT `test`.`username` FROM `test` WHERE `test`.`money` > ?",
 
-                QueryBuilder.select(
+                StatementBuilder.select(
                         ColumnSetElement.of(keyColumn, valueColumn),
                         table
-                ).order(
+                ).orderBy(
                         valueColumn,
                         desc
                 ).limit(
@@ -64,7 +64,7 @@ public class AppTest {
                 ),
                 "SELECT `key`, `value` FROM `test` ORDER BY `value` DESC LIMIT 15",
 
-                QueryBuilder.selectWith(
+                StatementBuilder.selectWith(
                         subquery,
                         ColumnSetElement.of(
                                 keyColumn,

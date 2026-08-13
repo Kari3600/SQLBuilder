@@ -10,7 +10,7 @@ import java.util.function.Function;
 public class ValuesElement extends OrderedPropertiesElement {
 
     @Override
-    public void toSQL(SQLBuilder<?> builder) {
+    public void toSQL(SQLBuilder builder) {
         builder.append("(").appendSeparated(orderedProperties.keySet(), ", ").append(") VALUES (").appendSeparated(orderedProperties.values(), ", ").append(")");
     }
 

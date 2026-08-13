@@ -44,7 +44,7 @@ public interface SQLNumberSupplier<T extends Number> extends SQLSupplier<T> {
     default SQLSupplier<T> add(SQLSupplier<T> other) {
         return new SupplierBase<>(SQLNumberSupplier.this.getType()) {
             @Override
-            public void toSQL(SQLBuilder<?> builder) {
+            public void toSQL(SQLBuilder builder) {
                 builder.append(SQLNumberSupplier.this).append(" + ").append(other);
             }
         };
@@ -57,7 +57,7 @@ public interface SQLNumberSupplier<T extends Number> extends SQLSupplier<T> {
     default SQLSupplier<T> subtract(SQLSupplier<T> other) {
         return new SupplierBase<>(SQLNumberSupplier.this.getType()) {
             @Override
-            public void toSQL(SQLBuilder<?> builder) {
+            public void toSQL(SQLBuilder builder) {
                 builder.append(SQLNumberSupplier.this).append(" - ").append(other);
             }
         };
@@ -70,7 +70,7 @@ public interface SQLNumberSupplier<T extends Number> extends SQLSupplier<T> {
     default SQLSupplier<T> multiply(SQLSupplier<T> other) {
         return new SupplierBase<>(SQLNumberSupplier.this.getType()) {
             @Override
-            public void toSQL(SQLBuilder<?> builder) {
+            public void toSQL(SQLBuilder builder) {
                 builder.append(SQLNumberSupplier.this).append(" * ").append(other);
             }
         };
@@ -83,7 +83,7 @@ public interface SQLNumberSupplier<T extends Number> extends SQLSupplier<T> {
     default SQLSupplier<T> divide(SQLSupplier<T> other) {
         return new SupplierBase<>(SQLNumberSupplier.this.getType()) {
             @Override
-            public void toSQL(SQLBuilder<?> builder) {
+            public void toSQL(SQLBuilder builder) {
                 builder.append(SQLNumberSupplier.this).append(" / ").append(other);
             }
         };
@@ -96,7 +96,7 @@ public interface SQLNumberSupplier<T extends Number> extends SQLSupplier<T> {
     default SQLSupplier<T> modulo(SQLSupplier<T> other) {
         return new SupplierBase<>(SQLNumberSupplier.this.getType()) {
             @Override
-            public void toSQL(SQLBuilder<?> builder) {
+            public void toSQL(SQLBuilder builder) {
                 builder.append(SQLNumberSupplier.this).append(" % ").append(other);
             }
         };

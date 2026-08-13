@@ -26,7 +26,7 @@ public class WrappedColumn<K, T> extends SupplierBase<K> implements TableColumn<
     }
 
     @Override
-    public void toSQL(SQLBuilder<?> builder) {
+    public void toSQL(SQLBuilder builder) {
         wrapped.toSQL(builder);
     }
 

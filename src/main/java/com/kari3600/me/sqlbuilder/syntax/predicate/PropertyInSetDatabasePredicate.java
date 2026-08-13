@@ -11,7 +11,7 @@ public class PropertyInSetDatabasePredicate<T> implements SQLPredicate {
     private final Set<ConstantSupplier<T>> values;
 
     @Override
-    public void toSQL(SQLBuilder<?> builder) {
+    public void toSQL(SQLBuilder builder) {
         if (values.isEmpty()) {
             ConstantPredicate.FALSE.toSQL(builder);
         } else {

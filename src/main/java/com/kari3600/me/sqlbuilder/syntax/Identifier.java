@@ -6,7 +6,7 @@ public interface Identifier extends SQLSyntaxElement {
     String getName();
 
     @Override
-    default void toSQL(SQLBuilder<?> builder) {
+    default void toSQL(SQLBuilder builder) {
         builder.append("`").append(getName()).append("`");
     }
 }

@@ -3,7 +3,6 @@ package com.kari3600.me.sqlbuilder.builders;
 import com.kari3600.me.sqlbuilder.syntax.SQLSyntaxElement;
 import com.kari3600.me.sqlbuilder.syntax.SQLVariable;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -57,7 +56,7 @@ public class SQLBuilder {
     }
 
     public void setVariables(PreparedStatement ps) throws SQLException {
-        int idx = 0;
+        int idx = 1;
         for (SQLVariable<?> variable : variables) {
             variable.writeValue(ps, idx++);
         }

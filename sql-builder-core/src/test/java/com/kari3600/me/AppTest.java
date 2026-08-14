@@ -1,7 +1,6 @@
 package com.kari3600.me;
 
 import com.kari3600.me.sqlbuilder.builders.StatementBuilder;
-import com.kari3600.me.sqlbuilder.builders.stage.CoreBuilder;
 import com.kari3600.me.sqlbuilder.syntax.ColumnSetElement;
 import com.kari3600.me.sqlbuilder.syntax.column.Column;
 import com.kari3600.me.sqlbuilder.syntax.column.TableColumn;
@@ -21,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class AppTest {
     @ParameterizedTest
     @MethodSource("getTests")
-    public void test(CoreBuilder builder, String expected) {
+    public void test(StatementBuilder builder, String expected) {
         assertEquals(expected, builder.toString());
     }
 
